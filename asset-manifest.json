@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/should-i-book/static/css/main.065c63f0.css",
+    "main.css": "/should-i-book/static/css/main.1b3df67c.css",
     "main.js": "/should-i-book/static/js/main.d8ac53a8.js",
     "static/js/787.366a4468.chunk.js": "/should-i-book/static/js/787.366a4468.chunk.js",
-    "static/media/tired.png": "/should-i-book/static/media/tired.507cc7d90446b69983bc.png",
+    "static/media/tired.png": "/should-i-book/static/media/tired.37e427cb31bda6aedc96.png",
     "static/media/logo.svg": "/should-i-book/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "/should-i-book/index.html",
-    "main.065c63f0.css.map": "/should-i-book/static/css/main.065c63f0.css.map",
+    "main.1b3df67c.css.map": "/should-i-book/static/css/main.1b3df67c.css.map",
     "main.d8ac53a8.js.map": "/should-i-book/static/js/main.d8ac53a8.js.map",
     "787.366a4468.chunk.js.map": "/should-i-book/static/js/787.366a4468.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.065c63f0.css",
+    "static/css/main.1b3df67c.css",
     "static/js/main.d8ac53a8.js"
   ]
 }
