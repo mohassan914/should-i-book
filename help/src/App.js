@@ -47,7 +47,7 @@ function App() {
       <div className="container">
         <div className = "top">
           <div className = "location">
-            <p>{data.name}, {data.sys.country}</p>
+            <p>{data.name}</p>
           </div>
           <div className="temp">
             {data.main ? <h1>{Math.round(data.main.temp)}°F</h1> : null}
