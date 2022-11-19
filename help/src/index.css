@@ -85,9 +85,9 @@ h1 {
 
 .app .description {
   position: relative;
-  right: 90%;
+  /* right: 90%; */
   transform-origin: 0 0;
-  transform: rotate(269deg);
+  /* transform: rotate(269deg); */
 }
 
 .app .bottom {
