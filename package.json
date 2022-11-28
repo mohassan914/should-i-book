@@ -13,9 +13,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "fullstack-start": "react-scripts build && wrangler pages dev build --binding API_KEY=example",
     "start": "react-scripts start",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -39,6 +38,6 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^4.0.0"
+    "wrangler": "^2.4.4"
   }
 }
