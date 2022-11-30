@@ -7,18 +7,26 @@ function App() {
   // When we make it to production, change the latitude from the hard-coded 51.57 to and enviroment varible like {latitude} and same for longgitude
   // TO test, go into POSTMAN and then grab the Bearer token and then from CURL command, then type in the URL above and look at the JSON file. 
   /// TODO: Parse the JSON file correctly and look for the IATA code from the airline, This will be needed to find the cheapest flights from Chicago to entered city
+  // example: data.iataCode
   const [data,setData] = useState({})
   const [location, setLocation] = useState('')
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=feaadae7ace79914a82e3d7c5ca09a37&units=imperial`
   
   const searchLocation = (event) => {
     if (event.key === 'Enter') {
-      axios.get(url).then((response) => {
+    //  axios.get('/helloworld').then((response) => {
+        axios.get(url).then((response) => {
         setData(response.data)
         console.log(response.data)
       })
       setLocation('')
     }
+  }
+
+  const requestGreeting = async (event) => 
+  {
+    const result = await(await fetch('/helloworld')).text()
+    alert(result)
   }
 
 
@@ -54,6 +62,12 @@ function App() {
     // </div>
     <div className="app">
       <div className="search">
+        <input 
+        name = "greeting"
+        id = "greetingInput"
+        placeholder='ask the server for a greeting'
+        type = "text"/>
+        <button onClick={requestGreeting}>ask for greeting </button>
         <input 
         value = {location}
         onChange = {event => setLocation(event.target.value)}
