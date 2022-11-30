@@ -1,12 +1,14 @@
-import logo from './logo.svg';
 import './App.css';
 import React, { useState } from 'react'
 import axios from 'axios'
 
 function App() {
   const [data,setData] = useState({})
+  // const [data2,setData2] = useState({})
   const [location, setLocation] = useState('')
+  // const [location2,setLocation2] = useState('')
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=feaadae7ace79914a82e3d7c5ca09a37&units=imperial`
+  // const url2 = `http://api.openweathermap.org/geo/1.0/direct?q=${location2}&limit=1&appid=feaadae7ace79914a82e3d7c5ca09a37`
   
   const searchLocation = (event) => {
     if (event.key === 'Enter') {
@@ -17,6 +19,7 @@ function App() {
       setLocation('')
     }
   }
+
 
   return (
     // <div className="App">
@@ -43,11 +46,13 @@ function App() {
         onKeyPress={searchLocation}
         placeholder='Enter Location'
         type = "text"/>
+
       </div>
       <div className="container">
         <div className = "top">
           <div className = "location">
             <p>{data.name}</p>
+            <p>{}</p>
           </div>
           <div className="temp">
             {data.main ? <h1>{Math.round(data.main.temp)}°F</h1> : null}
@@ -63,11 +68,19 @@ function App() {
           </div>
           <div className="humidity">
             {data.main ? <p className='bold'>{data.main.humidity}%</p> : null}
-            <p>Humidity</p>
+            <p>humidity</p>
           </div>
           <div className="wind">
             {data.wind ? <p className='bold'>{data.wind.speed}MPH</p> : null}
             <p>Wind Speed</p>
+          </div>
+          <div className="latitude">
+            {data.coord ? <p className='bold'>{data.coord.lat}</p> : null}
+            <p>Latitude</p>
+          </div>
+          <div className="longitude">
+            {data.coord ? <p className='bold'>{data.coord.lon}</p> : null}
+            <p>Longitude</p>
           </div>
         </div>
       </div>
