@@ -13,7 +13,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "fullstack-start": "react-scripts build && wrangler pages dev build --binding API_KEY=example",
+    "fullstack-start": "react-scripts build && wrangler pages dev build --binding API_KEY=feaadae7ace79914a82e3d7c5ca09a37",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
