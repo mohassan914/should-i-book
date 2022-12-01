@@ -25,30 +25,9 @@ function App() {
 
   const requestGreeting = async (event) => 
   {
-    console.log("Wak to poland")
-    const result = await(await fetch('/helloworld')).text() // was .json() before
-    console.log(result)
+    const result = await(await fetch('/helloworld')).json()
     alert(result)
   }
-
-  //  async function getToken() {
-  //   const response = await axios({
-  //   url: "https://test.api.amadeus.com/v1/security/oauth2/token",
-  //   method: "get",
-  //   data: "grant_type=client_credentials",
-  //   auth: {
-  //     username: "UAMZ3z9St2fGMkP5xiI8aNGNtEpgG5xr",
-  //     password: "BFZgD5pGdPKO5k90",
-  //   },
-  // });
-  // alert(response).text()
-  // console.log("Is this ever clicked?");
-  // consoloe.log(response);
-  // return response.data;
-  // }
-
-
-
 
 
   /* TODO: implement code used to retrvie latitude and longitude from the open weather map
@@ -89,7 +68,6 @@ function App() {
         placeholder='ask the server for a greeting'
         type = "text"/>
         <button onClick={requestGreeting}>ask for greeting </button>
-        {/* <button onClick={getToken}>test</button> */}
         <input 
         value = {location}
         onChange = {event => setLocation(event.target.value)}
@@ -121,7 +99,7 @@ function App() {
             <p>humidity</p>
           </div>
           <div className="wind">
-            {data.wind ? <p className='bold'>{data.wind.speed}MPH</p> : null}
+            {data.wind ? <p className='bold'>{data.wind.speed} mph</p> : null}
             <p>Wind Speed</p>
           </div>
           <div className="latitude">
