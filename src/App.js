@@ -25,9 +25,30 @@ function App() {
 
   const requestGreeting = async (event) => 
   {
-    const result = await(await fetch('/helloworld')).text()
+    console.log("Wak to poland")
+    const result = await(await fetch('/helloworld')).text() // was .json() before
+    console.log(result)
     alert(result)
   }
+
+  //  async function getToken() {
+  //   const response = await axios({
+  //   url: "https://test.api.amadeus.com/v1/security/oauth2/token",
+  //   method: "get",
+  //   data: "grant_type=client_credentials",
+  //   auth: {
+  //     username: "UAMZ3z9St2fGMkP5xiI8aNGNtEpgG5xr",
+  //     password: "BFZgD5pGdPKO5k90",
+  //   },
+  // });
+  // alert(response).text()
+  // console.log("Is this ever clicked?");
+  // consoloe.log(response);
+  // return response.data;
+  // }
+
+
+
 
 
   /* TODO: implement code used to retrvie latitude and longitude from the open weather map
@@ -68,6 +89,7 @@ function App() {
         placeholder='ask the server for a greeting'
         type = "text"/>
         <button onClick={requestGreeting}>ask for greeting </button>
+        {/* <button onClick={getToken}>test</button> */}
         <input 
         value = {location}
         onChange = {event => setLocation(event.target.value)}
