@@ -26,6 +26,7 @@ function App() {
         const dog = await result.json();
         setData(response.data)
         setDataFlight(dog.data[0]);
+        console.log("test");
         
         console.log(dog.data[0]);
       //  alert("status good!" + dog.data[0].iataCode);
