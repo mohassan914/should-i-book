@@ -17,16 +17,18 @@ function App() {
     if (event.key === 'Enter') {
     //  axios.get('/helloworld').then((response) => {
         axios.get(url).then(async (response) => {
-        setData(response.data)
+       // setData(response.data)
         console.log(response.data)
 
         console.log("Walk to poland")
         const result = (await fetch(`/tokens/${response.data.coord.lat}/${response.data.coord.lon}/`)) // was text
         console.log('hello everbody');
         const dog = await result.json();
+        setData(response.data)
         setDataFlight(dog.data[0]);
+        
         console.log(dog.data[0]);
-        alert("status good!" + dog.data[0].iataCode);
+      //  alert("status good!" + dog.data[0].iataCode);
       })
     setLocation('')
     }
