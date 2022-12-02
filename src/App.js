@@ -40,8 +40,9 @@ function App() {
       //setData(response.data)
      // console.log(response.data)
     //}) // was .json() before
-    const result = await(await fetch('/token')).json()
-    alert(result)
+    const result = await(await fetch('/token')).json() // was text
+    console.log(result)
+    alert("Here is the token:" + result.access_token)
 
     // console.log(result.data)
     // var data = result.data
