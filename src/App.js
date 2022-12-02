@@ -9,17 +9,26 @@ function App() {
   /// TODO: Parse the JSON file correctly and look for the IATA code from the airline, This will be needed to find the cheapest flights from Chicago to entered city
   // example: data.iataCode
   const [data,setData] = useState({})
+  const [flight_data,setDataFlight] = useState({})
   const [location, setLocation] = useState('')
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=feaadae7ace79914a82e3d7c5ca09a37&units=imperial`
   
-  const searchLocation = (event) => {
+  const searchLocation = async (event) => {
     if (event.key === 'Enter') {
     //  axios.get('/helloworld').then((response) => {
-        axios.get(url).then((response) => {
+        axios.get(url).then(async (response) => {
         setData(response.data)
         console.log(response.data)
+
+        console.log("Walk to poland")
+        const result = (await fetch(`/tokens/${response.data.coord.lat}/${response.data.coord.lon}/`)) // was text
+        console.log('hello everbody');
+        const dog = await result.json();
+        setDataFlight(dog.data[0]);
+        console.log(dog.data[0]);
+        alert("status good!" + dog.data[0].iataCode);
       })
-      setLocation('')
+    setLocation('')
     }
   }
 
@@ -34,42 +43,16 @@ function App() {
 
   const changeFlightData = async (event) => 
   {
-    
     console.log("Walk to poland")
-    //const result = await(await fetch('/token')).then((response) => {
-      //setData(response.data)
-     // console.log(response.data)
-    //}) // was .json() before
-    const result = await(await fetch('/token')).json() // was text
-    console.log(result)
-    alert("Here is the token:" + result.access_token)
+    const result = (await fetch(`/tokens/${data.coord.lat}/${data.coord.lon}/`)) // was text
 
-    // console.log(result.data)
-    // var data = result.data
-    // setData(data)
-    //alert(result)
+    console.log('hello everbody');
+    const dog = await result.json();
+    console.log(dog.data[0]);
+    alert("status good!" + dog.data[0].iataCode);
+      
   }
   
-
-
-  
-
-
-
-
-
-  /* TODO: implement code used to retrvie latitude and longitude from the open weather map
-
-  amadeus.referenceData.locations.airports.get({
-    longitude : 0.1278,
-    latitude  : 51.5074
-  }).then(function(response) {
-    console.log(response.data[0]);
-  }).catch(function(responseError){
-    console.log(responseError.code);
-  }); 
-  */
-
 
   return (
     // <div className="App">
@@ -112,13 +95,15 @@ function App() {
         <div className = "top">
           <div className = "location">
             <p>{data.name}</p>
-            <p>{}</p>
           </div>
           <div className="temp">
             {data.main ? <h1>{Math.round(data.main.temp)}°F</h1> : null}
           </div>
           <div className="description">
             {data.weather ? <p>{data.weather[0].main}</p> : null}
+          </div>
+          <div className="myDog">
+            {flight_data.iataCode ? <p className='bold'>Airport Code: {flight_data.iataCode}</p> : null}
           </div>
         </div>
         <div className="bottom">
@@ -147,7 +132,10 @@ function App() {
             {data.price ? <p className='bold'>{data.price.total}</p> : null}
             <p>Price to poland</p>
           </div> */}
-
+          {/* <div className="myDog">
+            {flight_data.iataCode ? <p className='bold'>{flight_data.iataCode}</p> : null}
+            <p>AIRPORT CODE</p>
+          </div> */}
         </div>
       </div>
     </div>

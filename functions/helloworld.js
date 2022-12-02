@@ -1,5 +1,23 @@
 import axios from "axios";
 
+
+ 
+// async function getAuthToken() {
+//   // POST Request (To get Access Token)
+//   var url = 'https://api.us.onelogin.com/auth/oauth2/v2/token?grant_type=client_credentials' 
+
+//   var postOptions = {
+//     method: 'POST',
+//     headers: {
+//       "content-type":"application/x-www-form-urlencoded"
+//   },
+//     body: "grant_type=client_credentials&client_id=UAMZ3z9St2fGMkP5xiI8aNGNtEpgG5xr&client_secret=BFZgD5pGdPKO5k90",
+//   };
+//  var authToken = UrlFetchApp.fetch(url, postOptions);
+//  return authToken;
+// }
+
+
 export async function onRequest(context) {
 
 
@@ -27,12 +45,7 @@ export async function onRequest(context) {
   // -d "grant_type=client_credentials&client_id=UAMZ3z9St2fGMkP5xiI8aNGNtEpgG5xr&client_secret=BFZgD5pGdPKO5k90")
   
   
-// var Amadeus = require('amadeus');
 
-// var amadeus = new Amadeus({
-//   clientId: 'UAMZ3z9St2fGMkP5xiI8aNGNtEpgG5xr',
-//   clientSecret: 'BFZgD5pGdPKO5k90'
-// });
 
 // amadeus.shopping.flightOffersSearch.get({
 //     originLocationCode: 'SYD',
@@ -73,19 +86,17 @@ export async function onRequest(context) {
 
 
 
+  // var tok = getAuthToken();
   const response = await fetch("https://test.api.amadeus.com/v1/reference-data/locations/airports?latitude=51.57285&longitude=-0.44161", {
     method: "GET",
     headers: {
       Authorization:
         // "Basic " + Buffer.from("UAMZ3z9St2fGMkP5xiI8aNGNtEpgG5xr:BFZgD5pGdPKO5k90").toString("base64"),
-        "Bearer AwyDIRY0C70I5ZLtNXaRsdOCraEp",
+        "Bearer neBF9uCPm8GTnnGqoWJzVk1vGkGl",
     },
   });
 
 
-
-
-
-  return await response;
+  return response;
 }
 
