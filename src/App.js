@@ -25,27 +25,33 @@ function App() {
 
   const requestGreeting = async (event) => 
   {
-    console.log("Wak to poland")
+    // if (event.key === 'Enter') {
+    console.log("Walk to poland")
     const result = await(await fetch('/helloworld')).text() // was .json() before
     console.log(result)
-    alert(result)
+    alert(result) 
   }
 
-  //  async function getToken() {
-  //   const response = await axios({
-  //   url: "https://test.api.amadeus.com/v1/security/oauth2/token",
-  //   method: "get",
-  //   data: "grant_type=client_credentials",
-  //   auth: {
-  //     username: "UAMZ3z9St2fGMkP5xiI8aNGNtEpgG5xr",
-  //     password: "BFZgD5pGdPKO5k90",
-  //   },
-  // });
-  // alert(response).text()
-  // console.log("Is this ever clicked?");
-  // consoloe.log(response);
-  // return response.data;
-  // }
+  const changeFlightData = async (event) => 
+  {
+    
+    console.log("Walk to poland")
+    //const result = await(await fetch('/token')).then((response) => {
+      //setData(response.data)
+     // console.log(response.data)
+    //}) // was .json() before
+    const result = await(await fetch('/token')).json()
+    alert(result)
+
+    // console.log(result.data)
+    // var data = result.data
+    // setData(data)
+    //alert(result)
+  }
+  
+
+
+  
 
 
 
@@ -83,11 +89,15 @@ function App() {
     // </div>
     <div className="app">
       <div className="search">
-        <input 
+        {/* <input 
+        value = {location}
         name = "greeting"
         id = "greetingInput"
         placeholder='ask the server for a greeting'
-        type = "text"/>
+        onChange= {event => setLocation(event.target.value)}
+        onKeyPress={changeFlightData}
+        type = "text"/> */}
+        <button onClick={changeFlightData}>Walk to poland</button>
         <button onClick={requestGreeting}>ask for greeting </button>
         {/* <button onClick={getToken}>test</button> */}
         <input 
@@ -96,7 +106,6 @@ function App() {
         onKeyPress={searchLocation}
         placeholder='Enter Location'
         type = "text"/>
-
       </div>
       <div className="container">
         <div className = "top">
@@ -132,6 +141,12 @@ function App() {
             {data.coord ? <p className='bold'>{data.coord.lon}</p> : null}
             <p>Longitude</p>
           </div>
+
+          {/* <div className="flight_thing">
+            {data.price ? <p className='bold'>{data.price.total}</p> : null}
+            <p>Price to poland</p>
+          </div> */}
+
         </div>
       </div>
     </div>
