@@ -10,6 +10,7 @@ function App() {
   // example: data.iataCode
   const [data,setData] = useState({})
   const [flight_data,setDataFlight] = useState({})
+  const [flight_price_data, setFlightPrice] = useState({})
   const [location, setLocation] = useState('')
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=feaadae7ace79914a82e3d7c5ca09a37&units=imperial`
   
@@ -22,13 +23,23 @@ function App() {
 
         console.log("Walk to poland")
         const result = (await fetch(`/tokens/${response.data.coord.lat}/${response.data.coord.lon}/`)) // was text
+      
+
         console.log('hello everbody');
         const dog = await result.json();
+        console.log(dog.data[0].iataCode);
+        const priceAPI = (await fetch(`/prices/${dog.data[0].iataCode}/`)) // was text
+        const priceJson = await priceAPI.json();
+
+        //setData(response.data)
+       // setDataFlight(dog.data[0]);
+        console.log("test");
+        console.log(dog.data[0]);
+        console.log(priceJson.data[0]); // should print out the price of the API
         setData(response.data)
         setDataFlight(dog.data[0]);
-        console.log("test");
-        
-        console.log(dog.data[0]);
+        setFlightPrice(priceJson.data[0]);
+        console.log("Price of Trip is " + priceJson.data[0].price.grandTotal + " "+ priceJson.data[0].price.currency); // should print out the price of the API
       //  alert("status good!" + dog.data[0].iataCode);
       })
     setLocation('')
@@ -38,10 +49,16 @@ function App() {
   const requestGreeting = async (event) => 
   {
     // if (event.key === 'Enter') {
-    console.log("Walk to poland")
-    const result = await(await fetch('/helloworld')).text() // was .json() before
-    console.log(result)
-    alert(result) 
+    console.log("Walk to Bangkok")
+    //const result = await(await fetch('/helloworld')).text() // was .json() before
+    const result = (await fetch(`/tokens/${data.coord.lat}/${data.coord.lon}/`)) // was text
+    // const flight_json = await result.json()
+    // const result1 = await(await fetch(`/prices/${flight_json.data[0].iataCode}`)).text() // was .json() before
+
+    // console.log(result1)
+    // alert(result1) 
+    console.log(result);
+    alert(result);
   }
 
   const changeFlightData = async (event) => 
@@ -84,8 +101,8 @@ function App() {
         onChange= {event => setLocation(event.target.value)}
         onKeyPress={changeFlightData}
         type = "text"/> */}
-        <button onClick={changeFlightData}>Walk to poland</button>
-        <button onClick={requestGreeting}>ask for greeting </button>
+        {/* <button onClick={changeFlightData}>Walk to poland</button>
+        <button onClick={requestGreeting}>ask for greeting </button> */}
         {/* <button onClick={getToken}>test</button> */}
         <input 
         value = {location}
@@ -105,8 +122,11 @@ function App() {
           <div className="description">
             {data.weather ? <p>{data.weather[0].main}</p> : null}
           </div>
-          <div className="myDog">
+          <div className="destination_code">
             {flight_data.iataCode ? <p className='bold'>Airport Code: {flight_data.iataCode}</p> : null}
+          </div>
+          <div className="flight_price">
+            {flight_price_data.price ? <p className='bold'>Price of Trip from Chicago to {location} is: {flight_price_data.price.total} {flight_price_data.price.currency}</p> : null}
           </div>
         </div>
         <div className="bottom">
