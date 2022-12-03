@@ -67,7 +67,10 @@ function App() {
         })
         
         //  alert("status good!" + dog.data[0].iataCode);
-        setLoading(loading)
+        if (!loading) {
+          setLoading(loading)
+        }
+        
       })
       
     setLocation('')
