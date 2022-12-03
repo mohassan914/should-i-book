@@ -65,12 +65,14 @@ function App() {
           console.log(response.data)
     
         })
+        
         //  alert("status good!" + dog.data[0].iataCode);
       })
       
     setLocation('')
     setDate('')
     setMonth('')
+    setLoading(!loading)
   }
 
 
