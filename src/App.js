@@ -25,7 +25,6 @@ function App() {
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=feaadae7ace79914a82e3d7c5ca09a37&units=imperial`
 
   const submit = async (event) => {
-    setLoading(!loading)
     //  axios.get('/helloworld').then((response) => {
       axios.get(url).then(async (response) => {
         console.log(response.data)
