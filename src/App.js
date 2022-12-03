@@ -67,12 +67,12 @@ function App() {
         })
         
         //  alert("status good!" + dog.data[0].iataCode);
+        setLoading(loading)
       })
       
     setLocation('')
     setDate('')
     setMonth('')
-    setLoading(!loading)
   }
 
 
