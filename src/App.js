@@ -10,21 +10,24 @@ function App() {
   // example: data.iataCode
   const months = ["January", "Febuary","March", "April","May","June","July","Auguest","September","October","November","December"];
   const [data,setData] = useState({})
-  const [historicData, sethistoricData] = useState({})
+  const [historicMonthData, sethistoricMonthData] = useState({})
+  const [historicDayData, sethistoricDayData] = useState({})
   const [flight_data,setDataFlight] = useState({})
   const [flight_price_data, setFlightPrice] = useState({})
   const [location, setLocation] = useState('')
   const [date, setDate] = useState('')
   const [month, setMonth] = useState('')
-    //Current Location data
+  //Current Location data
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=feaadae7ace79914a82e3d7c5ca09a37&units=imperial`
-    //Current location daily yearly data
-  const url2 = `https://history.openweathermap.org/data/2.5/aggregated/month?q=${location}&month=${month}&appid=feaadae7ace79914a82e3d7c5ca09a37&units=imperial`
+  //Current location historic monthly data
+  const url2 = `https://history.openweathermap.org/data/2.5/aggregated/month?q=${location}&month=${month}&appid=feaadae7ace79914a82e3d7c5ca09a37`
+  //Current location historic daily data
+  const url3 = `https://history.openweathermap.org/data/2.5/aggregated/day?q=${location}&month=${month}&day=${date}&appid=feaadae7ace79914a82e3d7c5ca09a37`
   
   const submit = async (event) => {
     
     //  axios.get('/helloworld').then((response) => {
-        axios.get(url).then(async (response) => {
+      axios.get(url).then(async (response) => {
        // setData(response.data)
         console.log(response.data)
 
@@ -39,7 +42,7 @@ function App() {
         const priceJson = await priceAPI.json();
 
         //setData(response.data)
-       // setDataFlight(dog.data[0]);
+        // setDataFlight(dog.data[0]);
         console.log("test");
         console.log(dog.data[0]);
         console.log(priceJson.data[0]); // should print out the price of the API
@@ -47,12 +50,18 @@ function App() {
         setDataFlight(dog.data[0]);
         setFlightPrice(priceJson.data[0]);
         console.log("Price of Trip is " + priceJson.data[0].price.grandTotal + " "+ priceJson.data[0].price.currency); // should print out the price of the API
-        axios.get(url2).then(async (response) => {
-          sethistoricData(response.data)
-          console.log(response.data)
-    
-        })
-      //  alert("status good!" + dog.data[0].iataCode);
+
+        //  alert("status good!" + dog.data[0].iataCode);
+      })
+      axios.get(url2).then(async (response) => {
+        sethistoricMonthData(response.data)
+        console.log(response.data)
+  
+      })
+      axios.get(url3).then(async (response) => {
+        sethistoricDayData(response.data)
+        console.log(response.data)
+  
       })
     setLocation('')
     setDate('')
@@ -123,22 +132,6 @@ function App() {
           <div className="description">
             {data.weather ? <p>{data.weather[0].main}</p> : null}
           </div>
-          <div className="destination_code">
-            {flight_data.iataCode ? <p className='bold'>Airport Code: {flight_data.iataCode}</p> : null}
-          </div>
-          <div className="flight_price">
-            {flight_price_data.price ? <p className='bold'>Price of Trip from Chicago to {location} is: {flight_price_data.price.total} {flight_price_data.price.currency}</p> : null}
-          </div>
-          <div className = "middle">
-          <div className="mintemp">
-            {historicData.result ? <p className='bold'>{Math.round(1.8*(historicData.result.temp.record_min-273.15)+32)}°F</p> : null}
-            <p>Monthly Record Minimum Temperature</p>
-          </div>
-          <div className="maxtemp">
-            {historicData.result ? <p className='bold'>Record Maximum Temperature of {months[month-1]} 2022 in {location} {Math.round(1.8*(historicData.result.temp.record_max-273.15)+32)}°F</p> : null} 
-            <p>Record Maximum Temperature of {months[month-1]} 2022 in {location}</p>
-          </div>
-        </div>
         </div>
         <div className="bottom">
           <div className="feels">
@@ -162,15 +155,22 @@ function App() {
             <p>Longitude</p>
           </div>
 
-          {/* <div className="flight_thing">
-            {data.price ? <p className='bold'>{data.price.total}</p> : null}
-            <p>Price to poland</p>
-          </div> */}
-          {/* <div className="myDog">
-            {flight_data.iataCode ? <p className='bold'>{flight_data.iataCode}</p> : null}
-            <p>AIRPORT CODE</p>
-          </div> */}
+          
         </div>
+        <div className = "bottomer">
+            <div className="destination_code">
+              {flight_data.iataCode ? <p className='bold'>Airport Code: {flight_data.iataCode}</p> : null}
+            </div>
+            <div className="flight_price">
+              {flight_price_data.price ? <p className='bold'>Price of Trip from Chicago to {location} is: {flight_price_data.price.total} {flight_price_data.price.currency}</p> : null}
+            </div>
+            <div className="mintemp">
+              {historicMonthData.result ? <p className='bold'>Record Minimum Temperature of  {months[(historicMonthData.result.month)-1]} 2022 in {location} {Math.round(1.8*(historicMonthData.result.temp.record_min-273.15)+32)}°F</p> : null}
+            </div>
+            <div className="maxtemp">
+              {historicMonthData.result ? <p className='bold'>Record Maximum Temperature of {months[(historicMonthData.result.month)-1]} 2022 in {location} {Math.round(1.8*(historicMonthData.result.temp.record_max-273.15)+32)}°F</p> : null} 
+            </div>
+          </div>
       </div>
     </div>
   );
