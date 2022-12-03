@@ -72,7 +72,6 @@ function App() {
     setLocation('')
     setDate('')
     setMonth('')
-    setLoading(loading)
   }
 
 
@@ -121,12 +120,14 @@ function App() {
         onChange = {event => setMonth(event.target.value)}
         placeholder='Enter Month #'
         type = "text"/>
-        <button onClick={submit}>submit</button>
           <LoadingOverlay
         active={loading}
         spinner
         text='Loading...'
-        ></LoadingOverlay>
+        >
+        <button onClick={submit}>submit</button>
+        active={!loading}
+        </LoadingOverlay>
       </div>
 
 
