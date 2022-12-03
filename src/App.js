@@ -4,7 +4,7 @@ import axios from 'axios'
 import LoadingOverlay from 'react-loading-overlay-ts';
 
 function App() {
-  const [loading,setLoading]=useState(true);
+  const [loading,setLoading]=useState(false);
   // ENDPOINT WE NEED FOR AMADUES: https://test.api.amadeus.com/v1/reference-data/locations/airports?latitude=51.57285&longitude=-0.44161
   // When we make it to production, change the latitude from the hard-coded 51.57 to and enviroment varible like {latitude} and same for longgitude
   // TO test, go into POSTMAN and then grab the Bearer token and then from CURL command, then type in the URL above and look at the JSON file. 
@@ -25,7 +25,6 @@ function App() {
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=feaadae7ace79914a82e3d7c5ca09a37&units=imperial`
 
   const submit = async (event) => {
-    setLoading(!loading)
     //  axios.get('/helloworld').then((response) => {
       axios.get(url).then(async (response) => {
         console.log(response.data)
@@ -72,6 +71,7 @@ function App() {
     setLocation('')
     setDate('')
     setMonth('')
+    setLoading(loading)
   }
 
 
@@ -120,14 +120,12 @@ function App() {
         onChange = {event => setMonth(event.target.value)}
         placeholder='Enter Month #'
         type = "text"/>
+        <button onClick={submit}>submit</button>
           <LoadingOverlay
         active={loading}
         spinner
         text='Loading...'
-        >
-        <button onClick={submit}>submit</button>
-        active={!loading}
-        </LoadingOverlay>
+        ></LoadingOverlay>
       </div>
 
 
