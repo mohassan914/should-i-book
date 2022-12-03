@@ -71,7 +71,7 @@ function App() {
     setLocation('')
     setDate('')
     setMonth('')
-    setLoading(!loading)
+    setLoading(loading)
   }
 
 
