@@ -8,14 +8,21 @@ function App() {
   // TO test, go into POSTMAN and then grab the Bearer token and then from CURL command, then type in the URL above and look at the JSON file. 
   /// TODO: Parse the JSON file correctly and look for the IATA code from the airline, This will be needed to find the cheapest flights from Chicago to entered city
   // example: data.iataCode
+  const months = ["January", "Febuary","March", "April","May","June","July","Auguest","September","October","November","December"];
   const [data,setData] = useState({})
+  const [historicData, sethistoricData] = useState({})
   const [flight_data,setDataFlight] = useState({})
   const [flight_price_data, setFlightPrice] = useState({})
   const [location, setLocation] = useState('')
+  const [date, setDate] = useState('')
+  const [month, setMonth] = useState('')
+    //Current Location data
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=feaadae7ace79914a82e3d7c5ca09a37&units=imperial`
+    //Current location daily yearly data
+  const url2 = `https://history.openweathermap.org/data/2.5/aggregated/month?q=${location}&month=${month}&appid=feaadae7ace79914a82e3d7c5ca09a37&units=imperial`
   
-  const searchLocation = async (event) => {
-    if (event.key === 'Enter') {
+  const submit = async (event) => {
+    
     //  axios.get('/helloworld').then((response) => {
         axios.get(url).then(async (response) => {
        // setData(response.data)
@@ -40,39 +47,18 @@ function App() {
         setDataFlight(dog.data[0]);
         setFlightPrice(priceJson.data[0]);
         console.log("Price of Trip is " + priceJson.data[0].price.grandTotal + " "+ priceJson.data[0].price.currency); // should print out the price of the API
+        axios.get(url2).then(async (response) => {
+          sethistoricData(response.data)
+          console.log(response.data)
+    
+        })
       //  alert("status good!" + dog.data[0].iataCode);
       })
     setLocation('')
-    }
+    setDate('')
+    setMonth('')
   }
 
-  const requestGreeting = async (event) => 
-  {
-    // if (event.key === 'Enter') {
-    console.log("Walk to Bangkok")
-    //const result = await(await fetch('/helloworld')).text() // was .json() before
-    const result = (await fetch(`/tokens/${data.coord.lat}/${data.coord.lon}/`)) // was text
-    // const flight_json = await result.json()
-    // const result1 = await(await fetch(`/prices/${flight_json.data[0].iataCode}`)).text() // was .json() before
-
-    // console.log(result1)
-    // alert(result1) 
-    console.log(result);
-    alert(result);
-  }
-
-  const changeFlightData = async (event) => 
-  {
-    console.log("Walk to poland")
-    const result = (await fetch(`/tokens/${data.coord.lat}/${data.coord.lon}/`)) // was text
-
-    console.log('hello everbody');
-    const dog = await result.json();
-    console.log(dog.data[0]);
-    alert("status good!" + dog.data[0].iataCode);
-      
-  }
-  
 
   return (
     // <div className="App">
@@ -107,10 +93,25 @@ function App() {
         <input 
         value = {location}
         onChange = {event => setLocation(event.target.value)}
-        onKeyPress={searchLocation}
         placeholder='Enter Location'
         type = "text"/>
+        <input 
+        value = {date}
+        onChange = {event => setDate(event.target.value)}
+        placeholder='Enter Date #'
+        type = "text"/>
+        <input 
+        value = {month}
+        onChange = {event => setMonth(event.target.value)}
+        placeholder='Enter Month #'
+        type = "text"/>
+        <button onClick={submit}>submit</button>
       </div>
+
+
+
+
+
       <div className="container">
         <div className = "top">
           <div className = "location">
@@ -128,6 +129,16 @@ function App() {
           <div className="flight_price">
             {flight_price_data.price ? <p className='bold'>Price of Trip from Chicago to {location} is: {flight_price_data.price.total} {flight_price_data.price.currency}</p> : null}
           </div>
+          <div className = "middle">
+          <div className="mintemp">
+            {historicData.result ? <p className='bold'>{Math.round(1.8*(historicData.result.temp.record_min-273.15)+32)}°F</p> : null}
+            <p>Monthly Record Minimum Temperature</p>
+          </div>
+          <div className="maxtemp">
+            {historicData.result ? <p className='bold'>Record Maximum Temperature of {months[month-1]} 2022 in {location} {Math.round(1.8*(historicData.result.temp.record_max-273.15)+32)}°F</p> : null} 
+            <p>Record Maximum Temperature of {months[month-1]} 2022 in {location}</p>
+          </div>
+        </div>
         </div>
         <div className="bottom">
           <div className="feels">

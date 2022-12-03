@@ -2,7 +2,7 @@ async function getToken() {
     /* fucntion that returns Oatuh Token */
 	const resp = await fetch('https://test.api.amadeus.com/v1/security/oauth2/token', {
 		method: 'POST',
-		body: 'grant_type=client_credentials&client_id=UAMZ3z9St2fGMkP5xiI8aNGNtEpgG5xr&client_secret=BFZgD5pGdPKO5k90',
+		body: `grant_type=client_credentials&client_id=UAMZ3z9St2fGMkP5xiI8aNGNtEpgG5xr&client_secret=BFZgD5pGdPKO5k90`,
 		headers: {
 			'content-Type': 'application/x-www-form-urlencoded'
 		}
