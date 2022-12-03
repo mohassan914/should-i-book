@@ -9,51 +9,45 @@ function App() {
   /// TODO: Parse the JSON file correctly and look for the IATA code from the airline, This will be needed to find the cheapest flights from Chicago to entered city
   // example: data.iataCode
   const [data,setData] = useState({})
+  const [historicData,sethistoricData] = useState({})
   const [flight_data,setDataFlight] = useState({})
   const [location, setLocation] = useState('')
+  const [date, setDate] = useState('')
+  const [month, setMonth] = useState('')
+  //Current Location data
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=feaadae7ace79914a82e3d7c5ca09a37&units=imperial`
+  //Current location daily yearly data
+  const url2 = `https://history.openweathermap.org/data/2.5/aggregated/month?q=${location}&month=${month}&appid=feaadae7ace79914a82e3d7c5ca09a37&units=imperial`
   
-  const searchLocation = async (event) => {
-    if (event.key === 'Enter') {
-    //  axios.get('/helloworld').then((response) => {
-        axios.get(url).then(async (response) => {
-       // setData(response.data)
-        console.log(response.data)
 
-        console.log("Walk to poland")
-        const result = (await fetch(`/tokens/${response.data.coord.lat}/${response.data.coord.lon}/`)) // was text
-        console.log('hello everbody');
-        const dog = await result.json();
-        setData(response.data)
-        setDataFlight(dog.data[0]);
-        console.log("test");
-        
-        console.log(dog.data[0]);
-      //  alert("status good!" + dog.data[0].iataCode);
-      })
+
+  const submit = async (event) => 
+  {
+    console.log("FUCK !! FUCK!!")
+    axios.get(url).then(async (response) => {
+      // setData(response.data)
+       console.log(response.data)
+
+       console.log("Walk to poland")
+       const result = (await fetch(`/tokens/${response.data.coord.lat}/${response.data.coord.lon}/`)) // was text
+       console.log('hello everbody');
+       const dog = await result.json();
+       setData(response.data)
+       setDataFlight(dog.data[0]);
+       console.log("test");
+       
+       console.log(dog.data[0]);
+     //  alert("status good!" + dog.data[0].iataCode);
+     })
+    axios.get(url2).then(async (response) => {
+      sethistoricData(response.data)
+      console.log(response.data)
+      console.log("FUCK")
+
+    })
     setLocation('')
-    }
-  }
-
-  const requestGreeting = async (event) => 
-  {
-    // if (event.key === 'Enter') {
-    console.log("Walk to poland")
-    const result = await(await fetch('/helloworld')).text() // was .json() before
-    console.log(result)
-    alert(result) 
-  }
-
-  const changeFlightData = async (event) => 
-  {
-    console.log("Walk to poland")
-    const result = (await fetch(`/tokens/${data.coord.lat}/${data.coord.lon}/`)) // was text
-
-    console.log('hello everbody');
-    const dog = await result.json();
-    console.log(dog.data[0]);
-    alert("status good!" + dog.data[0].iataCode);
-      
+    setDate('')
+    setMonth('')
   }
   
 
@@ -84,16 +78,29 @@ function App() {
         onChange= {event => setLocation(event.target.value)}
         onKeyPress={changeFlightData}
         type = "text"/> */}
-        <button onClick={changeFlightData}>Walk to poland</button>
-        <button onClick={requestGreeting}>ask for greeting </button>
+
+        
         {/* <button onClick={getToken}>test</button> */}
         <input 
         value = {location}
         onChange = {event => setLocation(event.target.value)}
-        onKeyPress={searchLocation}
         placeholder='Enter Location'
         type = "text"/>
+        <input 
+        value = {date}
+        onChange = {event => setDate(event.target.value)}
+        placeholder='Enter Date #'
+        type = "text"/>
+        <input 
+        value = {month}
+        onChange = {event => setMonth(event.target.value)}
+        placeholder='Enter Month #'
+        type = "text"/>
+        <button onClick={submit}>submit</button>
       </div>
+      
+
+      
       <div className="container">
         <div className = "top">
           <div className = "location">
@@ -107,6 +114,16 @@ function App() {
           </div>
           <div className="myDog">
             {flight_data.iataCode ? <p className='bold'>Airport Code: {flight_data.iataCode}</p> : null}
+          </div>
+        </div>
+        <div className = "middle">
+          <div className="mintemp">
+            {historicData.result ? <p className='bold'>{Math.round(1.8*(historicData.result.temp.record_min-273.15)+32)}°F</p> : null}
+            <p>Monthly Record Minimum Temperature</p>
+          </div>
+          <div className="maxtemp">
+            {historicData.result ? <p className='bold'>{Math.round(1.8*(historicData.result.temp.record_max-273.15)+32)}°F</p> : null}
+            <p>Monthly Record Maximum Temperature</p>
           </div>
         </div>
         <div className="bottom">
@@ -130,6 +147,7 @@ function App() {
             {data.coord ? <p className='bold'>{data.coord.lon}</p> : null}
             <p>Longitude</p>
           </div>
+          
 
           {/* <div className="flight_thing">
             {data.price ? <p className='bold'>{data.price.total}</p> : null}
