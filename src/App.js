@@ -98,11 +98,7 @@ function App() {
           placeholder='Enter Month #'
           type = "text"/>
           <button class="submit" onClick={submit}>submit</button>
-          <LoadingOverlay
-            active={loading}
-            spinner
-            text='Loading...'
-          ></LoadingOverlay>
+          
         </div>
       </h1>
 
@@ -144,27 +140,28 @@ function App() {
       </header>
 
       <nav>
+        {historicMonthData.result ? <p className='bold'> {months[(historicMonthData.result.month)-1]} {historicDayData.result.day} Historic Data Averages:</p> : null}
         <div className="dayavgtemp">
-          {historicMonthData.result ? <p className='bold'>Average Temperature of {data.name} on {months[(historicMonthData.result.month)-1]} {historicDayData.result.day}: {Math.round(1.8*(historicDayData.result.temp.mean-273.15)+32)}°F</p> : null}
+          {historicMonthData.result ? <p>Temperature : {Math.round(1.8*(historicDayData.result.temp.mean-273.15)+32)}°F</p> : null}
         </div>
         <div className="dayavgpressure">
-          {historicMonthData.result ? <p className='bold'>Average Pressure of {data.name} on {months[(historicMonthData.result.month)-1]} {historicDayData.result.day}: {Math.round(historicDayData.result.pressure.mean)} hPa</p> : null}
+          {historicMonthData.result ? <p>Pressure : {Math.round(historicDayData.result.pressure.mean)}hPa</p> : null}
         </div>
         <div className="dayavghumidity">
-          {historicMonthData.result ? <p className='bold'>Average Humidity of {data.name} on {months[(historicMonthData.result.month)-1]} {historicDayData.result.day}: {(historicDayData.result.humidity.mean)}%</p> : null}
+          {historicMonthData.result ? <p>Humidity : {(historicDayData.result.humidity.mean)}%</p> : null}
         </div>
         <div className="dayavgwind">
-          {historicMonthData.result ? <p className='bold'>Average Wind Speed of {data.name} on {months[(historicMonthData.result.month)-1]} {historicDayData.result.day}: {(historicDayData.result.wind.mean)} m/s </p> : null}
+          {historicMonthData.result ? <p>Wind Speed : {(historicDayData.result.wind.mean)}m/s </p> : null}
         </div>
         <div className="dayavgprecipitation">
-          {historicMonthData.result ? <p className='bold'>Average Precipitation of {data.name} on {months[(historicMonthData.result.month)-1]} {historicDayData.result.day}: {(historicDayData.result.precipitation.mean)} mm </p> : null}
-        </div>{historicMonthData.result ? <p> MONTHLY AVERAGE DATA: </p> : null}
+          {historicMonthData.result ? <p>Precipitation : {(historicDayData.result.precipitation.mean)}mm </p> : null}
+        </div>{historicMonthData.result ? <p className='bold'> {months[(historicMonthData.result.month)-1]} Monthly Historic Data : </p> : null}
         <div className = "monthlydata">
           <div className="mintemp">
-            {historicMonthData.result ? <p className='bold'>Record Minimum Temperature of  {months[(historicMonthData.result.month)-1]} 2022 in {data.name} {Math.round(1.8*(historicMonthData.result.temp.record_min-273.15)+32)}°F</p> : null}
+            {historicMonthData.result ? <p>Record Minimum Temperature : {Math.round(1.8*(historicMonthData.result.temp.record_min-273.15)+32)}°F</p> : null}
           </div>
           <div className="maxtemp">
-            {historicMonthData.result ? <p className='bold'>Record Maximum Temperature of {months[(historicMonthData.result.month)-1]} 2022 in {data.name} {Math.round(1.8*(historicMonthData.result.temp.record_max-273.15)+32)}°F</p> : null} 
+            {historicMonthData.result ? <p>Record Maximum Temperature : {Math.round(1.8*(historicMonthData.result.temp.record_max-273.15)+32)}°F</p> : null} 
           </div>
         </div>
       </nav>
@@ -177,6 +174,11 @@ function App() {
           {flight_price_data.price ? <p className='bold'>Price of Trip from Chicago to {data.name} is: {flight_price_data.price.total} {flight_price_data.price.currency}</p> : null}
         </div>
       </section>
+      <LoadingOverlay
+            active={loading}
+            spinner
+            text='Loading...'
+          ></LoadingOverlay>
     </div> //wrapper
   );
 }
