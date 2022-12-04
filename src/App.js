@@ -25,7 +25,7 @@ function App() {
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=feaadae7ace79914a82e3d7c5ca09a37&units=imperial`
 
   const submit = async (event) => {
-    setLoading(!loading)
+    setLoading(!loading) //start loading
     //  axios.get('/helloworld').then((response) => {
       axios.get(url).then(async (response) => {
         console.log(response.data)
@@ -67,9 +67,8 @@ function App() {
         })
         
         //  alert("status good!" + dog.data[0].iataCode);
-        if (!loading) {
-          setLoading(loading)
-        }
+        
+        setLoading(loading) //stop loading
         
       })
       
@@ -80,114 +79,105 @@ function App() {
 
 
   return (
-    // <div className="App">
-    //   <header className="App-header">
-    //     <img src={logo} className="App-logo" alt="logo" />
-    //     <p>
-    //       Edit <code>src/App.js</code> and save to reload.
-    //     </p>
-    //     <a
-    //       className="App-link"
-    //       href="https://reactjs.org"
-    //       target="_blank"
-    //       rel="noopener noreferrer"
-    //     >
-    //       Learn React
-    //     </a>
-    //   </header>
-    // </div>
-    <div className="app">
-      <div className="search">
-        {/* <input 
-        value = {location}
-        name = "greeting"
-        id = "greetingInput"
-        placeholder='ask the server for a greeting'
-        onChange= {event => setLocation(event.target.value)}
-        onKeyPress={changeFlightData}
-        type = "text"/> */}
-        {/* <button onClick={changeFlightData}>Walk to poland</button>
-        <button onClick={requestGreeting}>ask for greeting </button> */}
-        {/* <button onClick={getToken}>test</button> */}
-        <input 
-        value = {location}
-        onChange = {event => setLocation(event.target.value)}
-        placeholder='Enter Location'
-        type = "text"/>
-        <input 
-        value = {date}
-        onChange = {event => setDate(event.target.value)}
-        placeholder='Enter Date #'
-        type = "text"/>
-        <input 
-        value = {month}
-        onChange = {event => setMonth(event.target.value)}
-        placeholder='Enter Month #'
-        type = "text"/>
-        <button onClick={submit}>submit</button>
+    <div class="wrapper">
+      <h1>
+        <div className="search">
+          <input 
+          value = {location}
+          onChange = {event => setLocation(event.target.value)}
+          placeholder='Enter Location'
+          type = "text"/>
+          <input 
+          value = {date}
+          onChange = {event => setDate(event.target.value)}
+          placeholder='Enter Date #'
+          type = "text"/>
+          <input 
+          value = {month}
+          onChange = {event => setMonth(event.target.value)}
+          placeholder='Enter Month #'
+          type = "text"/>
+          <button class="submit" onClick={submit}>submit</button>
           <LoadingOverlay
-        active={loading}
-        spinner
-        text='Loading...'
-        ></LoadingOverlay>
-      </div>
+            active={loading}
+            spinner
+            text='Loading...'
+          ></LoadingOverlay>
+        </div>
+      </h1>
 
+      <header>
+        {/* <div className = "location">
+          <p>{data.name}</p>
+        </div>
+        <div className="temp">
+          {data.main ? <h1>{Math.round(data.main.temp)}°F</h1> : null}
+        </div>
+        <div className="description">
+          {data.weather ? <p>{data.weather[0].main}</p> : null}
+        </div> */}
+        <div className = "location">
+          <p>{data.name}</p>
+          {data.main ? <h1>{Math.round(data.main.temp)}°F</h1> : null}
+          {data.weather ? <p>{data.weather[0].main}</p> : null}
+        </div>
+        <div className="feels">
+          {data.main ? <p className='bold'>{Math.round(data.main.feels_like)}°F</p> : null}
+          {data.main ? <p>Feels Like</p> : null}
+        </div>
+        <div className="humidity">
+          {data.main ? <p className='bold'>{data.main.humidity}%</p> : null}
+          {data.main ? <p>Humidity</p> : null}
+        </div>
+        <div className="wind">
+          {data.wind ? <p className='bold'>{data.wind.speed}MPH</p> : null}
+          {data.main ? <p>Wind Speed</p> : null}
+        </div>
+        <div className="latitude">
+          {data.coord ? <p className='bold'>{data.coord.lat}</p> : null}
+          {data.main ? <p>Latitude</p>: null}
+        </div>
+        <div className="longitude">
+          {data.coord ? <p className='bold'>{data.coord.lon}</p> : null}
+          {data.main ? <p>Longitude</p> : null}
+        </div>
+      </header>
 
-
-
-
-      <div className="container">
-        <div className = "top">
-          <div className = "location">
-            <p>{data.name}</p>
+      <nav>
+        <div className="dayavgtemp">
+          {historicMonthData.result ? <p className='bold'>Average Temperature of {data.name} on {months[(historicMonthData.result.month)-1]} {historicDayData.result.day}: {Math.round(1.8*(historicDayData.result.temp.mean-273.15)+32)}°F</p> : null}
+        </div>
+        <div className="dayavgpressure">
+          {historicMonthData.result ? <p className='bold'>Average Pressure of {data.name} on {months[(historicMonthData.result.month)-1]} {historicDayData.result.day}: {Math.round(historicDayData.result.pressure.mean)} hPa</p> : null}
+        </div>
+        <div className="dayavghumidity">
+          {historicMonthData.result ? <p className='bold'>Average Humidity of {data.name} on {months[(historicMonthData.result.month)-1]} {historicDayData.result.day}: {(historicDayData.result.humidity.mean)}%</p> : null}
+        </div>
+        <div className="dayavgwind">
+          {historicMonthData.result ? <p className='bold'>Average Wind Speed of {data.name} on {months[(historicMonthData.result.month)-1]} {historicDayData.result.day}: {(historicDayData.result.wind.mean)} m/s </p> : null}
+        </div>
+        <div className="dayavgprecipitation">
+          {historicMonthData.result ? <p className='bold'>Average Precipitation of {data.name} on {months[(historicMonthData.result.month)-1]} {historicDayData.result.day}: {(historicDayData.result.precipitation.mean)} mm </p> : null}
+        </div>{historicMonthData.result ? <p> MONTHLY AVERAGE DATA: </p> : null}
+        <div className = "monthlydata">
+          <div className="mintemp">
+            {historicMonthData.result ? <p className='bold'>Record Minimum Temperature of  {months[(historicMonthData.result.month)-1]} 2022 in {data.name} {Math.round(1.8*(historicMonthData.result.temp.record_min-273.15)+32)}°F</p> : null}
           </div>
-          <div className="temp">
-            {data.main ? <h1>{Math.round(data.main.temp)}°F</h1> : null}
-          </div>
-          <div className="description">
-            {data.weather ? <p>{data.weather[0].main}</p> : null}
+          <div className="maxtemp">
+            {historicMonthData.result ? <p className='bold'>Record Maximum Temperature of {months[(historicMonthData.result.month)-1]} 2022 in {data.name} {Math.round(1.8*(historicMonthData.result.temp.record_max-273.15)+32)}°F</p> : null} 
           </div>
         </div>
-        <div className="bottom">
-          <div className="feels">
-            {data.main ? <p className='bold'>{Math.round(data.main.feels_like)}°F</p> : null}
-            <p>Feels Like</p>
-          </div>
-          <div className="humidity">
-            {data.main ? <p className='bold'>{data.main.humidity}%</p> : null}
-            <p>humidity</p>
-          </div>
-          <div className="wind">
-            {data.wind ? <p className='bold'>{data.wind.speed}MPH</p> : null}
-            <p>Wind Speed</p>
-          </div>
-          <div className="latitude">
-            {data.coord ? <p className='bold'>{data.coord.lat}</p> : null}
-            <p>Latitude</p>
-          </div>
-          <div className="longitude">
-            {data.coord ? <p className='bold'>{data.coord.lon}</p> : null}
-            <p>Longitude</p>
-          </div>
+      </nav>
 
-          
+      <section>
+        <div className="destination_code">
+          {flight_data.iataCode ? <p className='bold'>Airport Code: {flight_data.iataCode}</p> : null}
         </div>
-        <div className = "bottomer">
-            <div className="destination_code">
-              {flight_data.iataCode ? <p className='bold'>Airport Code: {flight_data.iataCode}</p> : null}
-            </div>
-            <div className="flight_price">
-              {flight_price_data.price ? <p className='bold'>Price of Trip from Chicago to {data.name} is: {flight_price_data.price.total} {flight_price_data.price.currency}</p> : null}
-            </div>
-            <div className="mintemp">
-              {historicMonthData.result ? <p className='bold'>Record Minimum Temperature of  {months[(historicMonthData.result.month)-1]} 2022 in {data.name} {Math.round(1.8*(historicMonthData.result.temp.record_min-273.15)+32)}°F</p> : null}
-            </div>
-            <div className="maxtemp">
-              {historicMonthData.result ? <p className='bold'>Record Maximum Temperature of {months[(historicMonthData.result.month)-1]} 2022 in {data.name} {Math.round(1.8*(historicMonthData.result.temp.record_max-273.15)+32)}°F</p> : null} 
-            </div>
-          </div>
-      </div>
-    </div>
+        <div className="flight_price">
+          {flight_price_data.price ? <p className='bold'>Price of Trip from Chicago to {data.name} is: {flight_price_data.price.total} {flight_price_data.price.currency}</p> : null}
+        </div>
+      </section>
+    </div> //wrapper
   );
 }
 

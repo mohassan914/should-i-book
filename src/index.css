@@ -1,58 +1,111 @@
-* {
+/**************************************
+STATIC LAYOUT CSS
+**************************************/
+
+.wrapper {
+  width: 960px;
+  height: 1080px;
+  margin: 0 auto;
+}
+
+header {
+	width: 960px;
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+  text-align: center;
+}
+
+nav, section {
+  float: left;
+  text-align: center;
+}
+
+nav {
+  width: 400px;
+  margin-right: 10px;
+}
+
+section {
+  width: 550px;
+}
+
+.submit {
+  /* padding: .7rem 1.5rem; */
+  padding: 15px 32px;
+  font-size: 1.2rem;
+  border-radius: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.1);
+  color: #f8f8f8;
+  font-size: 16px;
+}
+
+h1 {
+  align-items: center;
+  text-align: center;
+  justify-content: space-evenly;
+}
+
+
+/**************************************
+CSS TO MAKE THE APP LOOK PRETTY
+**************************************/
+
+*, *:before, *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  
 }
 
 body {
+  /* background: #2980b9;
+  color: #FFF;
+  font-family: Helvetica;
+  text-align: center;
+  margin: 0; */
+
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: url('./assets/tired2.png') no-repeat center center/cover;
+  /* text-align: center; */
 }
 
-/* code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-} */
-
-p {
-  font-size: 1.6rem;
+header,
+nav,
+section {
+  border: 1px solid rgba(255,255,255,0.8);
+  margin-bottom: 10px;
+  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.2);
+  text-align: center;
+  align-items: center;
+  color:#f8f8f8;
 }
 
-h1 {
-  font-size: 6rem;
+header {
+  padding: 20px 0;
+  text-align: center;
 }
 
-.app {
-  width: 100%;
-  height: 100vh;
-  position: relative;
-  background-color: rgba(0, 0, 0, 0.4);
-  color: #fff;
+nav, section {
+  /* padding: 300px 0; */
+  /* height: 400; */
+  min-height: 600;
+  /* max-height: 200px; */
+  text-align: center;
 }
 
-.app:before {
-  content: '';
-  background: url('./assets/tired.png') no-repeat center center/cover;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  z-index: -1;
-}
-
-
-.app .search {
+.wrapper search {
   text-align: center;
   padding: 1rem;
 }
 
-.app input {
+.wrapper input {
   padding: .7rem 1.5rem;
   font-size: 1.2rem;
   border-radius: 25px;
@@ -61,46 +114,12 @@ h1 {
   color: #f8f8f8;
 }
 
-
 ::placeholder {
   color: #f8f8f8;
 }
 
-.container {
-  max-width: 700px;
-  height: 700px;
-  margin: auto;
-  padding: 0 1rem;
-  position: relative;
-  top: 10%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.app .top {
-  width: 100%;
-  margin: 1rem auto;
-}
-
-.app .description {
-  position: relative;
-  /* right: 90%; */
-  transform-origin: 0 0;
-  /* transform: rotate(269deg); */
-}
-
-.app .bottom {
-  display: flex;
-  justify-content: space-evenly;
-  text-align: center;
-  width: 100%;
-  margin: 1rem auto;
-  padding: 1rem;
-  border-radius: 12px;
-  background-color: rgba(255, 255, 255, 0.2);
-}
-
 .bold {
   font-weight: 700;
-}
+  font-size: large;
+  color: #f8f8f8;
+} 
