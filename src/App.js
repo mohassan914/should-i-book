@@ -36,7 +36,7 @@ function App() {
         console.log('hello everbody');
         const dog = await result.json();
         console.log(dog.data[0].iataCode);
-        const priceAPI = (await fetch(`/prices/${dog.data[0].iataCode}/`)) // was text
+        const priceAPI = (await fetch(`/prices/${dog.data[0].iataCode}/${month}/${date}}`)) // was text
         const priceJson = await priceAPI.json();
 
         //setData(response.data)
@@ -90,12 +90,12 @@ function App() {
           <input 
           value = {date}
           onChange = {event => setDate(event.target.value)}
-          placeholder='Enter Date #'
+          placeholder='Enter Day (DD)'
           type = "text"/>
           <input 
           value = {month}
           onChange = {event => setMonth(event.target.value)}
-          placeholder='Enter Month #'
+          placeholder='Enter Month (MM)'
           type = "text"/>
           <button class="submit" onClick={submit}>submit</button>
           
