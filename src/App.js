@@ -43,7 +43,6 @@ function App() {
         // setDataFlight(dog.data[0]);
         console.log("test");
         console.log(dog.data[0]);
-        console.log(priceJson.data[0]); // should print out the price of the API
         setData(response.data)
         setDataFlight(dog.data[0]);
         setFlightPrice(priceJson.data[0]);
