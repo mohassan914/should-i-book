@@ -19,8 +19,6 @@ function App() {
   const [location, setLocation] = useState('')
   const [date, setDate] = useState('')
   const [month, setMonth] = useState('')
-  //const [lat, setLat] = useState({})
-  //const [lon, setLon] = useState({})
   //Current Location data
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=feaadae7ace79914a82e3d7c5ca09a37&units=imperial`
 
@@ -31,19 +29,16 @@ function App() {
         console.log(response.data)
         console.log("Walk to poland")
         const result = (await fetch(`/tokens/${response.data.coord.lat}/${response.data.coord.lon}/`)) // was text
-      
-
         console.log('hello everbody');
         const dog = await result.json();
-        console.log(dog.data[0].iataCode);
-        const priceAPI = (await fetch(`/prices/${dog.data[0].iataCode}/${month}/${date}}`)) // was text
+        console.log(dog.data[0].iataCode); // would give us "CUN for airport code"
+        const priceAPI = (await fetch(`/prices/${dog.data[0].iataCode}/${month}/${date}`)) // was text
+        console.log("We made it here");
         const priceJson = await priceAPI.json();
-
-        //setData(response.data)
-        // setDataFlight(dog.data[0]);
+        console.log("Json with prives have been ready");
         console.log("test");
         console.log(dog.data[0]);
-        setData(response.data)
+        setData(response.data);
         setDataFlight(dog.data[0]);
         setFlightPrice(priceJson.data[0]);
         console.log("Price of Trip is " + priceJson.data[0].price.grandTotal + " "+ priceJson.data[0].price.currency); // should print out the price of the API
@@ -64,8 +59,6 @@ function App() {
           console.log(response.data)
     
         })
-        
-        //  alert("status good!" + dog.data[0].iataCode);
         
         setLoading(loading) //stop loading
         
@@ -96,6 +89,7 @@ function App() {
           onChange = {event => setMonth(event.target.value)}
           placeholder='Enter Month (MM)'
           type = "text"/>
+          <br></br>
           <button class="submit" onClick={submit}>submit</button>
           
         </div>
@@ -112,29 +106,34 @@ function App() {
           {data.weather ? <p>{data.weather[0].main}</p> : null}
         </div> */}
         <div className = "location">
-          <p>{data.name}</p>
-          {data.main ? <h1>{Math.round(data.main.temp)}°F</h1> : null}
-          {data.weather ? <p>{data.weather[0].main}</p> : null}
+          {data.main ? <h1 align="center">{data.name}</h1> : null}  
+          {/* {data.main ? <img src="http://openweathermap.org/img/wn/10d@2x.png"></img> : null}   */}
+          {data.main ? <h2><img src={`http://openweathermap.org/img/wn/${data.weather[0].icon}.png`}></img></h2> : null}
         </div>
+
+        <div className = "location_stats">
+        {data.main ? <h1>{Math.round(data.main.temp)}°F</h1> : null}
+          {data.weather ? <h2>{data.weather[0].main}</h2> : null}
+          </div> 
         <div className="feels">
-          {data.main ? <p className='bold'>{Math.round(data.main.feels_like)}°F</p> : null}
-          {data.main ? <p>Feels Like</p> : null}
+          {data.main ? <h1>{Math.round(data.main.feels_like)}°F</h1> : null}
+          {data.main ? <h2>Feels Like</h2> : null}
         </div>
         <div className="humidity">
-          {data.main ? <p className='bold'>{data.main.humidity}%</p> : null}
-          {data.main ? <p>Humidity</p> : null}
+          {data.main ? <h1>{data.main.humidity}%</h1> : null}
+          {data.main ? <h2>Humidity</h2> : null}
         </div>
         <div className="wind">
-          {data.wind ? <p className='bold'>{data.wind.speed}MPH</p> : null}
-          {data.main ? <p>Wind Speed</p> : null}
+          {data.wind ? <h1>{data.wind.speed}MPH</h1> : null}
+          {data.main ? <h2>Wind Speed</h2> : null}
         </div>
         <div className="latitude">
-          {data.coord ? <p className='bold'>{data.coord.lat}</p> : null}
-          {data.main ? <p>Latitude</p>: null}
+          {data.coord ? <h1>{data.coord.lat}</h1> : null}
+          {data.main ? <h2>Latitude</h2>: null}
         </div>
         <div className="longitude">
-          {data.coord ? <p className='bold'>{data.coord.lon}</p> : null}
-          {data.main ? <p>Longitude</p> : null}
+          {data.coord ? <h1>{data.coord.lon}</h1> : null}
+          {data.main ? <h2>Longitude</h2> : null}
         </div>
       </header>
 
@@ -157,10 +156,10 @@ function App() {
         </div>{historicMonthData.result ? <p className='bold'> {months[(historicMonthData.result.month)-1]} Monthly Historic Data : </p> : null}
         <div className = "monthlydata">
           <div className="mintemp">
-            {historicMonthData.result ? <p>Record Minimum Temperature : {Math.round(1.8*(historicMonthData.result.temp.record_min-273.15)+32)}°F</p> : null}
+            {historicMonthData.result ? <h3>Record Minimum Temperature : {Math.round(1.8*(historicMonthData.result.temp.record_min-273.15)+32)}°F</h3> : null}
           </div>
           <div className="maxtemp">
-            {historicMonthData.result ? <p>Record Maximum Temperature : {Math.round(1.8*(historicMonthData.result.temp.record_max-273.15)+32)}°F</p> : null} 
+            {historicMonthData.result ? <h3>Record Maximum Temperature : {Math.round(1.8*(historicMonthData.result.temp.record_max-273.15)+32)}°F</h3> : null} 
           </div>
         </div>
       </nav>
@@ -170,9 +169,15 @@ function App() {
           {flight_data.iataCode ? <p className='bold'>Airport Code: {flight_data.iataCode}</p> : null}
         </div>
         <div className="flight_price">
-          {flight_price_data.price ? <p className='bold'>Price of Trip from Chicago to {data.name} is: {flight_price_data.price.total} {flight_price_data.price.currency}</p> : null}
+          {flight_price_data.price ? <p className='bold'>Price of Trip from Chicago to {data.name} is: {Math.round(flight_price_data.price.total * 1.06)} USD</p> : null}
         </div>
       </section>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
       <LoadingOverlay
             active={loading}
             spinner

@@ -23,6 +23,8 @@ export async function onRequest(context) {
         // var lat = context.params.catchall[0];
         // var lon = context.params.catchall[1];
         var destinationCode = context.params.catchall[0];
+        var month = context.params.catchall[1];
+        var day = context.params.catchall[2]
 
         // amadeus.shopping.flightOffersSearch.get({
         //     originLocationCode: 'SYD',
@@ -34,9 +36,10 @@ export async function onRequest(context) {
         // }).catch(function(responseError){
         //   console.log(responseError.code);
         // });
+        console.log(day);
     
     
-        return fetch(`https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=ORD&destinationLocationCode=${destinationCode}&departureDate=2022-12-24&adults=1`, { //removed includedAirelineCode
+        return fetch(`https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=ORD&destinationLocationCode=${destinationCode}&departureDate=2023-${month}-${day}&adults=1`, { //removed includedAirelineCode
             headers: {
                 'Authorization': data.token_type + ' ' + data.access_token,
                 'Content-Type': 'application/x-www-form-urlencoded'
