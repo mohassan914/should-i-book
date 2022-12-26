@@ -77,7 +77,7 @@ function App() {
           <input 
           value = {location}
           onChange = {event => setLocation(event.target.value)}
-          placeholder='Enter Location'
+          placeholder='Enter Location (City)'
           type = "text"/>
           <input 
           value = {date}
@@ -108,7 +108,7 @@ function App() {
         <div className = "location">
           {data.main ? <h1 align="center">{data.name}</h1> : null}  
           {/* {data.main ? <img src="http://openweathermap.org/img/wn/10d@2x.png"></img> : null}   */}
-          {data.main ? <h2><img src={`http://openweathermap.org/img/wn/${data.weather[0].icon}.png`}></img></h2> : null}
+          {data.main ? <h1><img src={`http://openweathermap.org/img/wn/${data.weather[0].icon}.png`}></img></h1> : null}
         </div>
 
         <div className = "location_stats">
@@ -169,7 +169,7 @@ function App() {
           {flight_data.iataCode ? <p className='bold'>Airport Code: {flight_data.iataCode}</p> : null}
         </div>
         <div className="flight_price">
-          {flight_price_data.price ? <p className='bold'>Price of Trip from Chicago to {data.name} is: {Math.round(flight_price_data.price.total * 1.06)} USD</p> : null}
+          {flight_price_data.price ? <p className='bold'>Price of Trip from Chicago to {data.name} is: <span class="bold green">${Math.round(flight_price_data.price.total * 1.06)} USD</span></p> : null}
         </div>
       </section>
       <br></br>
