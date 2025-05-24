@@ -39,7 +39,7 @@ export async function onRequest(context) {
         console.log(day);
     
     
-        return fetch(`https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=ORD&destinationLocationCode=${destinationCode}&departureDate=2023-${month}-${day}&adults=1`, { //removed includedAirelineCode
+        return fetch(`https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=ORD&destinationLocationCode=${destinationCode}&departureDate=2025-${month}-${day}&adults=1`, { //removed includedAirelineCode
             headers: {
                 'Authorization': data.token_type + ' ' + data.access_token,
                 'Content-Type': 'application/x-www-form-urlencoded'
